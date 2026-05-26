@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Rindzela ❤️</title>
+
+  <style>
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    body{
+      width:100%;
+      height:100vh;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      background:#0f0f0f;
+      overflow:hidden;
+    }
+
+    .bg{
+      position:absolute;
+      width:100%;
+      height:100%;
+      background:linear-gradient(180deg,#000000,#1a001f,#000000);
+      z-index:-2;
+    }
+
+    .hearts{
+      position:absolute;
+      width:100%;
+      height:100%;
+      overflow:hidden;
+      z-index:-1;
+    }
+
+    .heart{
+      position:absolute;
+      color:#ff4d88;
+      animation: subir linear infinite;
+      opacity:0.7;
+    }
+
+    @keyframes subir{
+      0%{
+        transform:translateY(100vh) scale(0);
+      }
+      100%{
+        transform:translateY(-10vh) scale(1.5);
+      }
+    }
+
+    .card{
+      width:90%;
+      max-width:420px;
+      height:88vh;
+      background:rgba(255,255,255,0.08);
+      backdrop-filter:blur(12px);
+      border:1px solid rgba(255,255,255,0.1);
+      border-radius:25px;
+      padding:25px;
+      color:white;
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+      box-shadow:0 0 30px rgba(255,0,100,0.3);
+      animation: aparecer 2s ease;
+    }
+
+    @keyframes aparecer{
+      from{
+        opacity:0;
+        transform:translateY(30px);
+      }
+      to{
+        opacity:1;
+        transform:translateY(0);
+      }
+    }
+
+    h1{
+      text-align:center;
+      font-size:30px;
+      margin-bottom:20px;
+      color:#ff7eb3;
+    }
+
+    .texto{
+      font-size:20px;
+      line-height:34px;
+      white-space:pre-line;
+      min-height:320px;
+    }
+
+    .cursor{
+      display:inline-block;
+      width:2px;
+      background:white;
+      animation:piscando 0.8s infinite;
+    }
+
+    @keyframes piscando{
+      50%{
+        opacity:0;
+      }
+    }
+
+    .tempo{
+      text-align:center;
+      margin-top:20px;
+      padding:15px;
+      border-top:1px solid rgba(255,255,255,0.2);
+    }
+
+    .tempo h2{
+      font-size:18px;
+      margin-bottom:10px;
+      color:#ffb3d1;
+    }
+
+    #contador{
+      font-size:20px;
+      font-weight:bold;
+      color:#ffffff;
+    }
+
+    .assinatura{
+      text-align:center;
+      margin-top:10px;
+      color:#ff7eb3;
+      font-size:16px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="bg"></div>
+
+  <div class="hearts" id="hearts"></div>
+
+  <div class="card">
+
+    <div>
+      <h1>Rindzela ❤️</h1>
+
+      <div class="texto">
+        <span id="digitando"></span><span class="cursor"></span>
+      </div>
+    </div>
+
+    <div class="tempo">
+      <h2>Eu amo-te há:</h2>
+      <div id="contador"></div>
+
+      <div class="assinatura">
+        Lucas ❤️
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+
+    // TEXTO DA CARTA
+    const mensagem = `
+Rindzela ❤️
+
+Eu sei que estás chateada comigo,
+e sinceramente isso dói muito.
+
+Desde o dia 25 de Abril de 2025,
+quando comecei a gostar de ti,
+a minha vida mudou completamente.
+
+Tu te tornaste alguém muito especial,
+alguém que ocupa os meus pensamentos
+todos os dias.
+
+Talvez eu tenha errado contigo,
+e peço desculpas de coração.
+
+Nunca foi minha intenção
+magoar-te ou fazer-te sentir mal.
+
+Mesmo quando estamos mal,
+o meu coração continua a escolher-te.
+
+Eu só queria voltar
+a ver o teu sorriso comigo outra vez.
+
+Se puderes,
+dá-me uma oportunidade
+para consertar as coisas.
+
+Porque perder-te
+é algo que eu realmente não quero.
+
+Eu amo-te ❤️
+`;
+
+    const elemento = document.getElementById("digitando");
+
+    let i = 0;
+
+    function escrever(){
+      if(i < mensagem.length){
+        elemento.innerHTML += mensagem.charAt(i);
+        i++;
+        setTimeout(escrever, 55);
+      }
+    }
+
+    escrever();
+
+    // DATA
+    const dataConheci = new Date("2025-04-25T00:00:00");
+
+    function atualizarContador(){
+
+      const agora = new Date();
+
+      const diferenca = agora - dataConheci;
+
+      const segundos = Math.floor(diferenca / 1000) % 60;
+      const minutos = Math.floor(diferenca / (1000 * 60)) % 60;
+      const horas = Math.floor(diferenca / (1000 * 60 * 60)) % 24;
+      const dias = Math.floor(diferenca / (1000 * 60 * 60 * 24));
+
+      document.getElementById("contador").innerHTML =
+        `${dias} dias ${horas} horas ${minutos} minutos ${segundos} segundos`;
+    }
+
+    setInterval(atualizarContador,1000);
+
+    atualizarContador();
+
+    // CORAÇÕES
+    function criarCoracao(){
+
+      const heart = document.createElement("div");
+
+      heart.classList.add("heart");
+
+      heart.innerHTML = "❤";
+
+      heart.style.left = Math.random() * 100 + "vw";
+
+      heart.style.fontSize = Math.random() * 20 + 10 + "px";
+
+      heart.style.animationDuration = Math.random() * 5 + 5 + "s";
+
+      document.getElementById("hearts").appendChild(heart);
+
+      setTimeout(()=>{
+        heart.remove();
+      },10000);
+    }
+
+    setInterval(criarCoracao,300);
+
+  </script>
+
+</body>
+</html>
